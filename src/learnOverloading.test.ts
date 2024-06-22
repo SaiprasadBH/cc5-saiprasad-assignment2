@@ -1,6 +1,9 @@
 import { describe, test, expect } from "vitest";
-import { processQuery } from "./learnOverloading";
-import { HighLevelQuery, LowLevelQuery } from "./interfaces";
+import {
+  processQuery,
+  HighLevelQuery,
+  LowLevelQuery,
+} from "./learnOverloading";
 
 describe("processQuery function tests", () => {
   test("processQuery with HighLevelQuery should return ShallowResult", () => {

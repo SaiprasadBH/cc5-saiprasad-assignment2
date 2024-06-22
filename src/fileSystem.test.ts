@@ -7,17 +7,15 @@ describe("File Class", () => {
 
   beforeEach(() => {
     parentFolder = new Folder("Parent Folder");
-    file = new File("test.txt", parentFolder, 100);
-    parentFolder.contents.push(file);
-    console.log(parentFolder);
+    file = new File("test.txt", 100, parentFolder);
   });
 
   test("getSize() returns correct size", () => {
     expect(file.getSize()).toBe(100);
   });
 
-  test("path() returns correct path", () => {
-    expect(file.path()).toBe("Parent Folder/test.txt");
+  test("getPath() returns correct path", () => {
+    expect(file.getPath()).toBe("Parent Folder/test.txt");
   });
 });
 
@@ -29,17 +27,15 @@ describe("Folder Class", () => {
   beforeEach(() => {
     rootFolder = new Folder("Root");
     subFolder = new Folder("Subfolder", rootFolder);
-    fileInSubFolder = new File("data.json", subFolder, 200);
-    subFolder.contents.push(fileInSubFolder);
-    rootFolder.contents.push(subFolder);
+    fileInSubFolder = new File("data.json", 200, subFolder);
   });
 
   test("getSize() returns correct size", () => {
     expect(rootFolder.getSize()).toBe(200);
   });
 
-  test("path() returns correct path", () => {
-    expect(subFolder.path()).toBe("Root/Subfolder");
+  test("getPath() returns correct path", () => {
+    expect(subFolder.getPath()).toBe("Root/Subfolder");
   });
 
   test("getContents() returns correct contents", () => {
@@ -56,28 +52,26 @@ describe("FileSystem Class", () => {
     fileSystem = new FileSystem("Root");
   });
 
-  test("createFileItem() creates file correctly", () => {
-    const createdFile = fileSystem.createFileItem(
+  test("createItem() creates file correctly", () => {
+    const createdFile = fileSystem.createItem(
       "/folder1/folder2/test.txt"
     ) as File;
     expect(createdFile.name).toBe("test.txt");
     expect(createdFile.parent?.name).toBe("folder2");
-    expect(createdFile.getSize()).toBe(8); // Assuming size calculation in createFileItem logic
+    expect(createdFile.getSize()).toBe(8);
   });
 
-  test("createFileItem() creates folder correctly", () => {
-    const createdFolder = fileSystem.createFileItem(
-      "/folder1/folder3"
-    ) as Folder;
+  test("createItem() creates folder correctly", () => {
+    const createdFolder = fileSystem.createItem("/folder1/folder3") as Folder;
     expect(createdFolder.name).toBe("folder3");
     expect(createdFolder.parent?.name).toBe("folder1");
     expect(createdFolder.getSize()).toBe(0);
     expect(createdFolder.getContents().length).toBe(0);
   });
 
-  test("createFileItem() handles existing items correctly", () => {
-    const existingFolder = fileSystem.createFileItem("/folder1") as Folder;
-    const sameFolder = fileSystem.createFileItem("/folder1") as Folder;
+  test("createItem() handles existing items correctly", () => {
+    const existingFolder = fileSystem.createItem("/folder1") as Folder;
+    const sameFolder = fileSystem.createItem("/folder1") as Folder;
     expect(sameFolder).toBe(existingFolder);
   });
 });

@@ -17,16 +17,16 @@ describe("Linked List Oops basic implementation tests", () => {
   });
 
   test("Linked List creation tests", () => {
-    const emptyList = new LinkedList<number>(); // Assuming number for testing
+    const emptyList = new LinkedList<number>();
     expect(emptyList.firstNode).toBeNull();
     expect(emptyList.lastNode).toBeNull();
 
     const arrayWithData = [1, "hello", { key1: 0 }, 2.0];
     const listFromArray = new LinkedList(arrayWithData);
-    expect(listFromArray.firstNode!.data).toBe(1); // Asserting non-null with !
+    expect(listFromArray.firstNode!.data).toBe(1);
     expect(listFromArray.lastNode!.data).toBe(2.0);
 
-    const anotherList = new LinkedList(listRef!); // Asserting non-null with !
+    const anotherList = new LinkedList(listRef!);
     expect(anotherList.toArray()).toEqual([
       1,
       "hello",
@@ -37,7 +37,7 @@ describe("Linked List Oops basic implementation tests", () => {
 
   test("Adding item to list tests", () => {
     const listNode1 = listRef!.firstNode!;
-    expect(listNode1.data).toBe(1); // Asserting non-null with !
+    expect(listNode1.data).toBe(1);
     expect(listNode1.nextNode!.data).toBe("hello");
     expect(listNode1.nextNode!.nextNode!.data).toEqual([2]);
     expect(listNode1.nextNode!.nextNode!.nextNode!.data).toEqual({
@@ -93,7 +93,7 @@ describe("Linked List Oops basic implementation tests", () => {
     expect(listRef!.filter(isNumber)).toEqual([1]);
   });
 
-  test("test for traverse function along with length function", () => {
+  test("test for traverse function", () => {
     const mockFunction = vi.fn();
     listRef!.traverse(mockFunction);
     expect(mockFunction.mock.calls.length).toBe(listRef!.listLength());
